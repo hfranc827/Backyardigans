@@ -1,0 +1,127 @@
+.logo {
+    width: 80px;         
+    height: auto;
+    position: absolute;   
+    top: 10px;
+    left: 10px;
+
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+}
+
+
+.logo:hover {
+    box-shadow: 0 0 25px rgba(255, 255, 150, 1);
+}
+.card-img-top2 {
+  height: 300px;       /* Ajusta la altura a tu gusto (150px, 200px, etc.) */
+  object-fit: cover;   /* Recorta la imagen para que no se deforme */
+  border-radius: 0.5rem; /* Opcional: esquinas más suaves */
+}
+
+.item-img {
+    width: 100%;      
+    height: 200px;   
+    object-fit:fill; 
+    border-radius: 8px 8px 8px 8px; 
+}
+
+.hero {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.hero-img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  
+  z-index: 0;         
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; 
+  color: white;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: fill;   
+}
+
+/* Servicio Express*/
+.express-img {
+  box-shadow: 0 0 15px rgba(128, 128, 128, 0.6);
+}
+.express-img:hover {
+  box-shadow: 0 0 25px rgba(169, 169, 169, 1),
+              0 0 50px rgba(211, 211, 211, 0.7);
+  transform: scale(1.03);
+}
+
+/* Servicio Económico*/
+.economico-img {
+  box-shadow: 0 0 15px rgba(220, 20, 60, 0.6);
+}
+.economico-img:hover {
+  box-shadow: 0 0 25px rgba(255, 69, 58, 1),
+              0 0 50px rgba(255, 99, 71, 0.7);
+  transform: scale(1.03);
+}
+
+/* Servicio Ejecutivo*/
+.ejecutivo-img {
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
+}
+.ejecutivo-img:hover {
+  box-shadow: 0 0 25px rgba(0, 255, 255, 1),
+              0 0 50px rgba(0, 206, 209, 0.7);
+  transform: scale(1.03);
+}
+
+/* Servicio Premium */
+.premium-img {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+.premium-img:hover {
+  box-shadow: 0 0 25px rgba(255, 223, 0, 1),
+              0 0 50px rgba(255, 223, 0, 0.7);
+  transform: scale(1.03);
+}
+
+.card-img-top1 {
+  width: 100%;         
+  height: 180px;       
+  object-fit: fill;    
+  border-top-left-radius: 0.5rem; 
+  border-top-right-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+  transition: all 0.3s ease; 
+  filter: brightness(0.95);  
+}
+
+.card-img-top1:hover {
+  filter: brightness(1.15); 
+  transform: scale(1.02);   
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3); 
+}
+
+
+
+

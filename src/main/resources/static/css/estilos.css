@@ -1,0 +1,95 @@
+:root {
+    --brandy-rose: #7e5438;
+    --peach-cream: #EFE7DA;
+    --chalk-beige: #E1DACA;
+    --neutral: #C1B6A4;
+    --white-beige: #F6F5EC;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: var(--white-beige);
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background: var(--brandy-rose);
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    color: white;
+}
+.navbar nav a {
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 2rem;
+    background: var(--peach-cream);
+}
+.search-bar {
+    margin-top: 1rem;
+}
+.search-bar input, .search-bar select, .search-bar button {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid var(--neutral);
+    border-radius: 5px;
+}
+
+/* Features */
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+    background: var(--chalk-beige);
+}
+.card {
+    text-align: center;
+    background: var(--white-beige);
+    padding: 1rem;
+    border-radius: 10px;
+    width: 25%;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+}
+.card h2 {
+    color: var(--brandy-rose);
+}
+
+/* Banner */
+.banner {
+    background: var(--neutral);
+    text-align: center;
+    padding: 2rem;
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Footer */
+footer {
+    background: var(--brandy-rose);
+    color: white;
+    padding: 2rem;
+}
+.footer-sections {
+    display: flex;
+    justify-content: space-between;
+}
+.footer-sections div {
+    width: 30%;
+}
+.footer-sections a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 5px 0;
+}
+.socials a {
+    margin-right: 10px;
+}

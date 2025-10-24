@@ -1,0 +1,203 @@
+:root {
+  --brandy-rose: #7e5438;
+  --peach-cream: #EFE7DA;
+  --chalk-beige: #E1DACA;
+  --neutral: #C1B6A4;
+  --white-beige: #F6F5EC;
+
+  --accent-yellow: #f2c94c;
+  --muted-gray: #E6E6E6;
+  --text-dark: #222;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: var(--white-beige);
+  color: var(--text-dark);
+}
+
+/* Header */
+.header {
+  text-align: right;
+  padding: 1rem 2rem;
+}
+
+.nav-links a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: var(--text-dark);
+}
+
+.menu {
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+/* Título */
+.title {
+  text-align: center;
+  font-size: 2.2rem;
+  margin: 1rem 0;
+  font-weight: bold;
+}
+
+/* Barra búsqueda */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.search-bar select,
+.search-bar input,
+.search-bar button {
+  padding: 0.5rem;
+  border: 1px solid var(--neutral);
+  border-radius: 4px;
+}
+
+.btn-search {
+  background: var(--brandy-rose);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Botones vista */
+.view-buttons {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.btn-outline,
+.btn-filled {
+  padding: 0.6rem 1rem;
+  margin: 0 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-outline {
+  border: 2px solid var(--brandy-rose);
+  background: none;
+  color: var(--brandy-rose);
+}
+
+.btn-filled {
+  border: none;
+  background: var(--brandy-rose);
+  color: white;
+}
+
+/* Lista carwash */
+.carwash-list {
+  width: 80%;
+  margin: auto;
+}
+
+.carwash-item {
+  display: flex;
+  background: var(--chalk-beige);
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.carwash-img {
+  width: 25%;
+  background: var(--muted-gray);
+}
+
+.carwash-info {
+  width: 45%;
+  padding: 1rem;
+}
+
+.carwash-info h2 {
+  color: var(--brandy-rose);
+  margin-bottom: 0.5rem;
+}
+
+.carwash-extra {
+  width: 30%;
+  background: #5a90af;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.btn-info {
+  background: var(--accent-yellow);
+  color: var(--text-dark);
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.map-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.map {
+  width: 80%;
+  height: 400px;
+  background: #e1daca; /* color de fondo tipo mapa */
+  position: relative;
+  border: 2px solid var(--neutral);
+  border-radius: 6px;
+  background-image: 
+    linear-gradient(to right, #f6f5ec 1px, transparent 1px),
+    linear-gradient(to bottom, #f6f5ec 1px, transparent 1px);
+  background-size: 50px 50px; /* cuadriculado tipo calles */
+}
+
+/* Marcadores */
+.marker {
+  position: absolute;
+  background: green;
+  color: white;
+  font-weight: bold;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  background: var(--peach-cream);
+  text-align: left;
+  }
+
+  .footer-logo 
+  { font-weight: bold; 
+} 
+.footer-col h4 { 
+    margin-bottom: 0.5rem; 
+} 
+.footer-col p {
+     margin-bottom: 0.3rem; 
+    } 
+
+.copyright {
+         text-align: center; 
+         padding: 1rem; 
+         font-size: 0.9rem; 
+         background: var(--white-beige); 
+        }

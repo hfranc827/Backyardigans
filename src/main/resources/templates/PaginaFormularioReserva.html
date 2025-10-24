@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carwash El Rapidito</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="/css/image.css" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    /* Hero con banner */
+    .hero {
+      position: relative;
+      background: url('/img/banner-carwash.png') center/cover no-repeat;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4); /* oscurece para que el texto resalte */
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    /* Mapa interactivo */
+    #map {
+      width: 100%;
+      height: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <img src="/image/01.JPG" class="logo">
+      <a class="navbar-brand" href="inicio">LOS BACKYARDIGANS</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="inicio">INICIO</a></li>
+          <li class="nav-item"><a class="nav-link" href="nosotros">NOSOTROS</a></li>
+          <li class="nav-item"><a class="nav-link" href="registro">REGISTRO</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">INICIAR SESION</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero con banner -->
+  <section class="hero">
+    <img src="/image/05_ban.PNG" class="hero-img">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="display-4 fw-bold">CARWASH EL RAPIDITO</h1>
+      <p class="lead">📱 Contactar: +51 900 600 090</p>
+    </div>
+  </section>
+
+  <!-- Catálogo + Reserva -->
+  <section class="container py-5">
+    <div class="row g-4">
+      <!-- Catálogo -->
+      <div class="col-lg-7">
+        <h3>Catálogo de Servicios</h3>
+        <div class="row g-3">
+          <!-- Servicio -->
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <img src="/image/08.JPG" class="card-img-top express-img" alt="Servicio Express">
+              <div class="card-body">
+                <h5 class="card-title">Servicio Express <span class="text-muted">S/ 80</span></h5>
+                <p class="card-text">Lavado rápido y eficiente en pocos minutos.</p>
+                <button class="btn btn-outline-primary btn-sm seleccionar-servicio" data-servicio="Servicio Express">Seleccionar</button>
+              </div>
+            </div>
+          </div>
+          <!-- Servicio -->
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <img src="/image/09.PNG" class="card-img-top economico-img" alt="Servicio Económico">
+              <div class="card-body">
+                <h5 class="card-title">Servicio Económico <span class="text-muted">S/ 100</span></h5>
+                <p class="card-text">La mejor opción calidad-precio para tu auto.</p>
+                <button class="btn btn-outline-primary btn-sm seleccionar-servicio" data-servicio="Servicio Económico">Seleccionar</button>
+              </div>
+            </div>
+          </div>
+          <!-- Servicio -->
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <img src="/image/10.PNG" class="card-img-top ejecutivo-img" alt="Servicio Ejecutivo">
+              <div class="card-body">
+                <h5 class="card-title">Servicio Ejecutivo <span class="text-muted">S/ 150</span></h5>
+                <p class="card-text">Lavado completo con encerado y aspirado interior.</p>
+                <button class="btn btn-outline-primary btn-sm seleccionar-servicio" data-servicio="Servicio Ejecutivo">Seleccionar</button>
+              </div>
+            </div>
+          </div>
+          <!-- Servicio -->
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <img src="/image/11.PNG" class="card-img-top premium-img" alt="Servicio Premium">
+              <div class="card-body">
+                <h5 class="card-title">Servicio Premium <span class="text-muted">S/ 200</span></h5>
+                <p class="card-text">El paquete más completo para tu vehículo.</p>
+                <button class="btn btn-outline-primary btn-sm seleccionar-servicio" data-servicio="Servicio Premium">Seleccionar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="col-lg-5">
+        <h3>Formulario de Reserva</h3>
+
+        <!-- Sección inicial: pregunta y botones -->
+        <div id="authPrompt" class="p-3 border rounded shadow-sm bg-light">
+          <p class="mb-2 fw-bold">¿Quieres reservar?</p>
+          <div class="d-flex gap-2">
+            <button id="btnShowRegister" class="btn btn-outline-primary w-50">Registrarse</button>
+            <button id="btnShowLogin" class="btn btn-primary w-50">Iniciar sesión</button>
+          </div>
+          <div id="authMsg" class="mt-2 small text-danger" style="display:none;"></div>
+        </div>
+
+        <!-- Formularios de auth (ocultos inicialmente) -->
+        <div id="authForms" class="p-3 border rounded shadow-sm bg-light mt-3" style="display:none;">
+          <!-- Registro -->
+          <form id="formRegister" style="display:none;">
+            <h6>Registro</h6>
+            <div class="mb-2">
+              <label class="form-label small">Nombre</label>
+              <input type="text" id="regNombre" class="form-control form-control-sm" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Apellido</label>
+              <input type="text" id="regApellido" class="form-control form-control-sm" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Correo</label>
+              <input type="email" id="regCorreo" class="form-control form-control-sm" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Contraseña</label>
+              <input type="password" id="regPassword" class="form-control form-control-sm" required>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success btn-sm w-50">Crear cuenta</button>
+              <button type="button" id="btnCancelAuth" class="btn btn-secondary btn-sm w-50">Cancelar</button>
+            </div>
+            <div id="regFeedback" class="mt-2 small" style="display:none;"></div>
+          </form>
+
+          <!-- Login -->
+          <form id="formLogin" style="display:none;">
+            <h6>Iniciar sesión</h6>
+            <div class="mb-2">
+              <label class="form-label small">Correo</label>
+              <input type="email" id="loginCorreo" class="form-control form-control-sm" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Contraseña</label>
+              <input type="password" id="loginPassword" class="form-control form-control-sm" required>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary btn-sm w-50">Entrar</button>
+              <button type="button" id="btnBackToPrompt" class="btn btn-outline-secondary btn-sm w-50">Volver</button>
+            </div>
+            <div id="loginFeedback" class="mt-2 small" style="display:none;"></div>
+          </form>
+        </div>
+
+        <!-- Panel final de reserva (oculto hasta auth OK) -->
+        <div id="reservePanel" class="p-3 border rounded shadow-sm bg-light mt-3" style="display:none;">
+          <h6>Confirmar Reserva</h6>
+          <form id="formReservaAjax">
+            <div class="mb-2">
+              <label for="servicioConfirm" class="form-label small">Servicio seleccionado</label>
+              <input type="text" id="servicioConfirm" class="form-control form-control-sm" readonly>
+            </div>
+            <div class="mb-2">
+              <label for="telefonoConfirm" class="form-label small">Teléfono</label>
+              <input type="text" id="telefonoConfirm" class="form-control form-control-sm" required>
+            </div>
+            <div class="mb-2">
+              <label for="fechaConfirm" class="form-label small">Fecha</label>
+              <input type="date" id="fechaConfirm" class="form-control form-control-sm" required>
+            </div>
+            <div class="mb-2">
+              <label for="horaConfirm" class="form-label small">Hora</label>
+              <input type="time" id="horaConfirm" class="form-control form-control-sm" required>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-sm">Reservar ahora</button>
+            </div>
+            <div id="reserveFeedback" class="mt-2 small" style="display:none;"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comentarios -->
+  <!--<section class="container py-5">
+    <h3>Comentarios ⭐⭐⭐⭐⭐</h3>
+    <div class="card p-3 shadow-sm">
+      <p><strong>JUANITO EL DESTRUCTOR</strong></p>
+      <p>Muy buen servicio, rápido y eficiente. ¡Recomendado!</p>
+    </div>
+  </section>-->
+
+<!-- Asegúrate de tener Bootstrap y Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <section class="container py-5">
+    <div class="d-flex align-items-center">
+    <h3 class="mb-0">Comentarios</h3>
+    <div class="text-warning ms-3">
+      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+      <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+    </div>
+  </div>
+
+  <!-- Comentario 1 -->
+  <div class="card p-3 shadow-sm mb-3 d-flex flex-row align-items-start">
+    <i class="fa fa-user-circle fa-2x me-3 mt-1"></i>
+    <div class="w-100">
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-1 fw-bold">JUANITO EL DESTRUCTOR</p>
+        <div class="text-warning">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+      </div>
+      <p class="mb-0">Muy buen servicio, rápido y eficiente. ¡Recomendado!</p>
+    </div>
+  </div>
+
+  <!-- Comentario 2 -->
+  <div class="card p-3 shadow-sm mb-3 d-flex flex-row align-items-start">
+    <i class="fa fa-user-circle fa-2x me-3 mt-1"></i>
+    <div class="w-100">
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-1 fw-bold">LUCÍA RAMÍREZ</p>
+        <div class="text-warning">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+        </div>
+      </div>
+      <p class="mb-0">Excelente atención, dejaron mi coche como nuevo.</p>
+    </div>
+  </div>
+
+  <!-- Comentario 3 -->
+  <div class="card p-3 shadow-sm mb-3 d-flex flex-row align-items-start">
+    <i class="fa fa-user-circle fa-2x me-3 mt-1"></i>
+    <div class="w-100">
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-1 fw-bold">CARLOS MENDOZA</p>
+        <div class="text-warning">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+      </div>
+      <p class="mb-0">Buen precio y resultados excelentes. Volveré pronto.</p>
+    </div>
+  </div>
+
+  <!-- Comentario 4 -->
+  <div class="card p-3 shadow-sm mb-3 d-flex flex-row align-items-start">
+    <i class="fa fa-user-circle fa-2x me-3 mt-1"></i>
+    <div class="w-100">
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-1 fw-bold">FÁTIMA LÓPEZ</p>
+        <div class="text-warning">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+        </div>
+      </div>
+      <p class="mb-0">Muy amables y puntuales, dejaron todo impecable.</p>
+    </div>
+  </div>
+
+  <!-- Comentario 5 -->
+  <div class="card p-3 shadow-sm mb-3 d-flex flex-row align-items-start">
+    <i class="fa fa-user-circle fa-2x me-3 mt-1"></i>
+    <div class="w-100">
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-1 fw-bold">ROBERTO GÓMEZ</p>
+        <div class="text-warning">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="far fa-star"></i>
+        </div>
+      </div>
+      <p class="mb-0">Buen trabajo pero tardaron un poco más de lo esperado.</p>
+    </div>
+  </div>
+
+  <!-- Comentario 6 -->
+  <div class="card p-3 shadow-sm mb-3 d-flex flex-row align-items-start">
+    <i class="fa fa-user-circle fa-2x me-3 mt-1"></i>
+    <div class="w-100">
+      <div class="d-flex justify-content-between align-items-center">
+        <p class="mb-1 fw-bold">ANDREA TORRES</p>
+        <div class="text-warning">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
+      </div>
+      <p class="mb-0">Increíble servicio, me encantó el resultado final.</p>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Mapa interactivo -->
+  <section class="container py-5">
+    <h3 class="text-center mb-4">Ubicación</h3>
+    <div id="map"></div>
+  </section>
+
+  <footer class="bg-dark text-white pt-5 pb-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <h4>NOSOTROS</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white text-decoration-none">Afiliate</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Trabaja con nosotros</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Redes sociales</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-3">
+          <h4>REDES SOCIALES</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white text-decoration-none">Facebook</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Instagram</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Tiktok</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-3">
+          <h4>POLITICAS</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white text-decoration-none">Terminos y Condiciones</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Politicas de Privacidad</a></li>
+          </ul>
+          <div class="d-flex gap-3 mt-2">
+            <a href="#" class="text-white fs-5">🐦</a>
+            <a href="#" class="text-white fs-5">💼</a>
+          </div>
+        </div>
+      </div>
+      <hr class="border-secondary">
+      <p class="text-center mb-0">&copy; 2025 LOS BACKYARDIGANS</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- jQuery (requerido por tu petición) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Inicializar mapa en Lima (ejemplo)
+    var map = L.map('map').setView([-12.0464, -77.0428], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    L.marker([-12.0464, -77.0428]).addTo(map)
+      .bindPopup("<b>Carwash El Rapidito</b><br>Estamos aquí 🚗💦")
+      .openPopup();
+  </script>
+
+  <script>
+    // Mantener selección de servicio desde catálogo
+    document.addEventListener("DOMContentLoaded", function() {
+      const botones = document.querySelectorAll(".seleccionar-servicio");
+      const inputServicioHidden = document.getElementById("servicio"); // ya existente en el HTML original (si no existe, crearlo)
+      const servicioConfirm = document.getElementById("servicioConfirm");
+
+      botones.forEach(boton => {
+        boton.addEventListener("click", function(e) {
+          e.preventDefault();
+          const servicio = this.getAttribute("data-servicio");
+          // campo oculto original (si existe en el DOM)
+          if (inputServicioHidden) inputServicioHidden.value = servicio;
+          if (servicioConfirm) servicioConfirm.value = servicio;
+          // si el usuario ya se autenticó y está en panel de reserva, actualizar también
+          $('#servicioConfirm').val(servicio);
+        });
+      });
+    });
+  </script>
+
+  <script>
+    $(function() {
+      // Elementos
+      const $authPrompt = $('#authPrompt');
+      const $authForms = $('#authForms');
+      const $formRegister = $('#formRegister');
+      const $formLogin = $('#formLogin');
+      const $reservePanel = $('#reservePanel');
+      const $authMsg = $('#authMsg');
+      const $regFeedback = $('#regFeedback');
+      const $loginFeedback = $('#loginFeedback');
+      const $reserveFeedback = $('#reserveFeedback');
+
+      // Mostrar formularios
+      $('#btnShowRegister').on('click', function() {
+        $authMsg.hide();
+        $authForms.show();
+        $formLogin.hide();
+        $formRegister.show();
+      });
+      $('#btnShowLogin').on('click', function() {
+        $authMsg.hide();
+        $authForms.show();
+        $formRegister.hide();
+        $formLogin.show();
+      });
+      $('#btnCancelAuth').on('click', function() {
+        $authForms.hide();
+      });
+      $('#btnBackToPrompt').on('click', function() {
+        $authForms.hide();
+      });
+
+      // Helper para mostrar panel de reserva con datos
+      function showReservePanel(dataPhone) {
+        // Llenar servicio desde campo existente si existe
+        const servicio = $('#servicio').val() || $('#servicioConfirm').val() || '';
+        $('#servicioConfirm').val(servicio);
+        if (dataPhone) $('#telefonoConfirm').val(dataPhone);
+        // fecha mínima hoy
+        const hoy = new Date().toISOString().split('T')[0];
+        $('#fechaConfirm').attr('min', hoy);
+        $authForms.hide();
+        $authPrompt.hide();
+        $reservePanel.show();
+      }
+
+      // Registro (fetch)
+      $formRegister.on('submit', function(e) {
+        e.preventDefault();
+        $regFeedback.hide().removeClass('text-success text-danger');
+        const payload = {
+          nombre: $('#regNombre').val(),
+          apellido: $('#regApellido').val(),
+          correo: $('#regCorreo').val(),
+          password: $('#regPassword').val()
+        };
+        // ejemplo de endpoint /api/register
+        fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(async res => {
+          const json = await res.json().catch(()=>({}));
+          if (!res.ok) throw new Error(json.message || 'Error al registrar');
+          $regFeedback.text('Registro exitoso.').addClass('text-success').show();
+          // si el backend devuelve teléfono en respuesta, usarlo; sino dejar vacío para que el usuario lo complete
+          const telefono = json.telefono || '';
+          showReservePanel(telefono);
+        })
+        .catch(err => {
+          $regFeedback.text(err.message || 'Error de registro').addClass('text-danger').show();
+        });
+      });
+
+      // Login (fetch)
+      $formLogin.on('submit', function(e) {
+        e.preventDefault();
+        $loginFeedback.hide().removeClass('text-success text-danger');
+        const payload = {
+          correo: $('#loginCorreo').val(),
+          password: $('#loginPassword').val()
+        };
+        // ejemplo de endpoint /api/login
+        fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(async res => {
+          const json = await res.json().catch(()=>({}));
+          if (!res.ok) throw new Error(json.message || 'Error de autenticación');
+          $loginFeedback.text('Ingreso correcto.').addClass('text-success').show();
+          // si el backend devuelve teléfono en user info, usarlo; sino dejar vacío
+          const telefono = json.telefono || '';
+          showReservePanel(telefono);
+        })
+        .catch(err => {
+          $loginFeedback.text(err.message || 'Error de inicio de sesión').addClass('text-danger').show();
+        });
+      });
+
+      // Envío de reserva (fetch)
+      $('#formReservaAjax').on('submit', function(e) {
+        e.preventDefault();
+        $reserveFeedback.hide().removeClass('text-success text-danger');
+        const reserva = {
+          servicio: $('#servicioConfirm').val(),
+          telefono: $('#telefonoConfirm').val(),
+          fecha: $('#fechaConfirm').val(),
+          hora: $('#horaConfirm').val()
+        };
+        // ejemplo de endpoint /api/reservas
+        fetch('/api/reservas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(reserva)
+        })
+        .then(async res => {
+          const json = await res.json().catch(()=>({}));
+          if (!res.ok) throw new Error(json.message || 'Error al crear reserva');
+          $reserveFeedback.text('Reserva creada con éxito.').addClass('text-success').show();
+        })
+        .catch(err => {
+          $reserveFeedback.text(err.message || 'Error al reservar').addClass('text-danger').show();
+        });
+      });
+
+    });
+  </script>
+</body>
+</html>
