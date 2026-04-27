@@ -53,4 +53,61 @@ Título
     
 >* Tabla: La tabla que deseas filtrar.
 >* **<Condición>**: Una expresión que devuelve un valor booleano (TRUE o FALSE) que determinará si una fila se incluirá en el resultado.
+<table width="99%">
+<tr>
+<td style="background-color:#FF6600;">
+
+<h2 style="color:#FFFFFF; margin:0;">Hola Mundo</h2>
+
+</td>
+</tr>
+</table>
+
+<p>
+La función DAX <strong>CALCULATE</strong> es una de las funciones más potentes en Power BI, utilizada para modificar el contexto de evaluación en el que se evalúan las expresiones.
+</p>
+
+<table border="1" width="99%">
+<tr>
+<td style="background-color:#4a235a;">
+
+<h1 style="color:#FFFFFF; margin:0;">El operador lógico: ||</h1>
+
+</td>
+</tr>
+</table>
+
+<pre>
+Cantidad de productos vendidos de color rojo, azul y negro 2 =
+CALCULATE
+(
+    [Total de Unidades Vendidas],
+    DimProduct[ColorName] = "Red" || DimProduct[ColorName] = "Azul" || DimProduct[ColorName] = "Blue" || DimProduct[ColorName] = "Negro"
+)
+</pre>
+
+<p><strong>negrita</strong></p>
+<p><em>itálica</em></p>
+<p><code>código</code></p>
+
+<p style="color:red;">Texto rojo</p>
+
+<p style="color:red; font-size:20px;">Texto personalizado</p>
+
+<table>
+<tr>
+<td style="background-color:#4a235a; color:white;">
+Título
+</td>
+</tr>
+</table>
+
+<span style="color:#FFFFFF; font-weight:bold; background-color:#000000; display:block; padding:10px;">
+    
+<ul>
+<li>Tabla: La tabla que deseas filtrar.</li>
+<li><strong>Condición</strong>: Una expresión que devuelve un valor booleano (TRUE o FALSE).</li>
+</ul>
+
+</span>
                                                                 
