@@ -31,3 +31,23 @@ CALCULATE
     DimProduct[ColorName] = "Red" || DimProduct[ColorName] = "Azul"  || DimProduct[ColorName] = "blue" || DimProduct[ColorName] = "Negro"
 )
 ```
+**negrita**
+*itálica*
+`código`
+
+<font color="red">Texto rojo</font>
+
+<span style="color:red; font-size:20px;">Texto personalizado</span>
+
+<table>
+<tr>
+<td style="background-color:#4a235a; color:white;">
+Título
+</td>
+</tr>
+</table>
+
+<font color="#FFFFFF">
+
+<span style="color:#FFFFFF; font-weight:bold;">
+                                                                
